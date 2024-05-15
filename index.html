@@ -71,106 +71,105 @@
     //React callback function
 
     // parent component
-    function Calculator() {
+function Calculator(){
 
-        // for the onCLick event
-        function handleNumber(value) {
-            // alert(value);
+// for the onCLick event
+function handleNumber(value){
+// alert(value);
 
-            let newValue = value;
+let newValue = value;
 
-            if (!calc.isInitial) {
-                newValue = calc.current + value;
-            }
-            setCalc({ current: newValue, isInitial: false });
-        }
+if(!calc.isInitial){
+    newValue = calc.current + value;
+}
+setCalc({current: newValue, total: calc.total, isInitial: false, preOp: calc.preOp});
+}
 
-        // const [display, setDisplay] = React.useState('0');
+// const [display, setDisplay] = React.useState('0');
 
-        // useState
-        const [calc, setCalc] = React.useState({
-            current: '0',
-            total: '',
-            isInitial: true,
-            preOp: ''
-        });
+// useState
+//useState returns an array with 2 elements, the first element is the current state value, the second element is a function that allows you to update the state value
+const [calc, setCalc] = React.useState({
+current: '0',
+total: '',
+isInitial: true,
+preOp:''
+});
 
-        //handle clear button//
-        function handleClear() {
-            setCalc({
-                current: '0',
-                total: '',
-                isInitial: true,
-                preOp: ''
-            })
-        }
+// handle clear button
+function handleClear(){
+setCalc({
+    current: '0',
+    total: '0',
+    isInitial: true,
+    preOp:''
+});
+}
 
-        // handle an operator when a button is clicked
-        function handleOperator(value) {
-            const total = doCalculation();
-            setCalc({
-                current: total.toString(),
-                total: total.toString(),
-                isInitial: true,
-                preOp: value
-            });
-        }
+// handle an operator when a button is clicked
+function handleOperator(value){
+const total = doCalculation();
+setCalc({
+    current: total.toString(),
+    total: total.toString(),
+    isInitial: true, 
+    preOp: value
+});
+}
 
+// for calculation function
+function doCalculation(){
+let total = parseFloat(calc.total);
+switch(calc.preOp){
+    case '*':
+        total *= parseFloat(calc.current); //equivalent to total = tolal * parseFloat(calc.current)
+        break;
+    case '/':
+        total /= parseFloat(calc.current); //equivalent to total = tolal / parseFloat(calc.current)
+        break;
+    case '+':
+        total += parseFloat(calc.current); //equivalent to total = tolal + parseFloat(calc.current)
+        break;
+    case '-':
+        total -= parseFloat(calc.current); //equivalent to total = tolal - parseFloat(calc.current)
+        break;
+    default:
+        total = parseFloat(calc.current)
+}
+return total;
+}
 
-        //for calculation function//
-        function doCalculation() {
-            let total = "";
-            switch (operator) {
-                case '*':
-                    total *= parseFloat(calc.current); //equivalent to total = tolal * parseFloat(calc.current)
-                    break;
-                case '/':
-                    total /= parseFloat(calc.current); //equivalent to total = tolal / parseFloat(calc.current)
-                    break;
-                case '+':
-                    total += parseFloat(calc.current); //equivalent to total = tolal + parseFloat(calc.current)
-                    break;
-                case '-':
-                    total -= parseFloat(calc.current); //equivalent to total = tolal - parseFloat(calc.current)
-                    break;
-                default:
-                    total = parseFloat(calc.current)
-            }
-            return total;
-        }
+return(
+    <div className="calculator">
+        <div className="display">{calc.current}</div>
 
+        <CalcButton value="7"/>
+        <CalcButton value="8"/>
+        <CalcButton value="9"/>
+        <CalcButton className="operator" value="*" onClick={handleOperator}/>
 
-        return (
-            <div className="calculator">
-            <div className="display">{calc.current}</div>
+        <CalcButton value="4" onClick={handleNumber}/>
+        <CalcButton value="5" onClick={handleNumber}/>
+        <CalcButton value="6" onClick={handleNumber}/>
+        <CalcButton className="operator" value="/" onClick={handleOperator}/>
 
-            <CalcButton value="7"onClick={handleNumber}/>
-            <CalcButton value="8"onClick={handleNumber}/>
-            <CalcButton value="9"onClick={handleNumber}/>
-            <CalcButton className="operator" value="*" onClick={handleOperator}/>
+        <CalcButton value="1" onClick={handleNumber}/>
+        <CalcButton value="2" onClick={handleNumber}/>
+        <CalcButton value="3" onClick={handleNumber}/>
+        <CalcButton className="operator" value="+" onClick={handleOperator}/>
 
-            <CalcButton value="4" onClick={handleNumber}/>
-            <CalcButton value="5" onClick={handleNumber}/>
-            <CalcButton value="6" onClick={handleNumber}/>
-            <CalcButton className="operator" value="/" onClick={handleOperator}/>
-
-            <CalcButton value="1" onClick={handleNumber}/>
-            <CalcButton value="2" onClick={handleNumber}/>
-            <CalcButton value="3" onClick={handleNumber}/>
-            <CalcButton className="operator" value="+" onClick={handleOperator}/>
-
-            <CalcButton value="C" onClick={handleClear}/>
-            <CalcButton value="0" onClick={handleNumber}/>
-            <CalcButton className="operator" value="=" onClick={handleOperator}/>
-            <CalcButton className="operator" value="-" onClick={handleOperator}/>
-        </div>
-        );
-    }
-    // child component
-    function CalcButton(props) {
-        return (
-            <button className={props.className} onClick={() => props.onClick(props.value)}>{props.value}</button>
-        );
-    }
-    ReactDOM.render(<div className="app-container"><Calculator /></div>, document.getElementById("app"));
+        <CalcButton value="C" onClick={handleClear}/>
+        <CalcButton value="0" onClick={handleNumber}/>
+        <CalcButton className="operator" value="=" onClick={handleOperator}/>
+        <CalcButton className="operator" value="-" onClick={handleOperator}/>
+    </div>
+);
+}
+// child component
+function CalcButton(props){
+return(
+    <button className={props.className} onClick={()=>props.onClick(props.value)}>{props.value}</button>
+);
+}
+ReactDOM.render(<div className="app-container"><Calculator/></div>, document.getElementById("app"));
 </script>
