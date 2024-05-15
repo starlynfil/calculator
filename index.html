@@ -105,6 +105,28 @@
             })
         }
 
+        //for calculation function//
+        function doCalculation(){
+    let total="";
+    switch(operator){
+        case '*':
+            total *= parseFloat(calc.current); //equivalent to total = tolal * parseFloat(calc.current)
+            break;
+        case '/':
+            total /= parseFloat(calc.current); //equivalent to total = tolal / parseFloat(calc.current)
+            break;
+        case '+':
+            total += parseFloat(calc.current); //equivalent to total = tolal + parseFloat(calc.current)
+            break;
+        case '-':
+            total -= parseFloat(calc.current); //equivalent to total = tolal - parseFloat(calc.current)
+            break;
+        default:
+            total = parseFloat(calc.current)
+    }
+    return total;
+}
+
 
         return (
             <div className="calculator">
@@ -131,12 +153,12 @@
                 <CalcButton className="operator" value="-" />
             </div>
         );
-        }
-        // child component
-        function CalcButton(props) {
-            return (
-                <button className={props.className} onClick={() => props.onClick(props.value)}>{props.value}</button>
-            );
-        }
-        ReactDOM.render(<div className="app-container"><Calculator /></div>, document.getElementById("app"));
+    }
+    // child component
+    function CalcButton(props) {
+        return (
+            <button className={props.className} onClick={() => props.onClick(props.value)}>{props.value}</button>
+        );
+    }
+    ReactDOM.render(<div className="app-container"><Calculator /></div>, document.getElementById("app"));
 </script>
