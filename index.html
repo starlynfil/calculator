@@ -143,9 +143,9 @@ return(
     <div className="calculator">
         <div className="display">{calc.current}</div>
 
-        <CalcButton value="7"/>
-        <CalcButton value="8"/>
-        <CalcButton value="9"/>
+        <CalcButton value="7" onClick={handleNumber}/>
+        <CalcButton value="8" onClick={handleNumber}/>
+        <CalcButton value="9" onClick={handleNumber}/>
         <CalcButton className="operator" value="*" onClick={handleOperator}/>
 
         <CalcButton value="4" onClick={handleNumber}/>
